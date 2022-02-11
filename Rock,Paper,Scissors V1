@@ -1,1 +1,86 @@
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+
+import random
+import json
+with open('RPSscore.json') as scores_data:
+    score = json.load(scores_data)
+
+
+print("""
+
+Welcome to a simple rock, paper, scissors game!
+Have Fun :)
+
+""")
+print('please type your name: ')
+player = input()
+player = player.capitalize()
+
+if player not in score:
+    score[player] = 0
+    print('Welcome to the game ', player)
+else:
+    print('Welcome Back ', player)
+
+plays = 1
+while plays >0:
+
+    hand = ['rock', 'paper', 'scissors']
+    pc_hand = hand[random.randint(0,len(hand)-1)]
+
+
+
+
+    print ('Select your hand please:')
+    player_hand = input()
+    player_hand = player_hand.lower()
+    evaluator = {'paperscissors':'lose', 'paperrock':'win','scissorsrock':'lose','scissorspaper':'win','rockpaper':'lose','rockscissors':'win'}
+
+
+
+    win = player+' wins today!!'
+    lose = player + ' loses today, better luck next time'
+    while player_hand not in hand:
+        print ('Please select a valid hand (rock,paper,scissors)')
+        player_hand = input()
+        player_hand = player_hand.lower()
+    print (player, ' plays :', player_hand)
+    print ('PC selects :', pc_hand)
+    hands_together = player_hand+pc_hand
+    if player_hand == pc_hand:
+        print ('Its a tie, no winners today')
+    elif  evaluator[hands_together] == 'win':
+      score[player]+=1
+      print(win)
+    elif evaluator[hands_together] == 'lose':
+        print (lose)
+        score[player]-=1
+
+    print("""Would you like to:
+       1) play again 
+       2) see your score 
+       3) quit""")
+    valid_playagain = ['1','2','3']
+    play_again = input()
+    while play_again not in valid_playagain:
+        print ('Please type a 1,2 or a 3')
+        play_again = input()
+    while play_again  == '2':
+        print('Your score is: ', score[player])
+        print("""Would you like to:
+                    1) play again 
+                    2) see your score 
+                    3) quit""")
+        play_again = input()
+
+    if play_again == '1':
+        plays = 1
+    elif play_again == '3':
+        print ("Thank you for playing today!")
+        with open('RPSscore.json','w') as scores_data:
+            json.dump(score, scores_data)
+        plays = 0
+
 
