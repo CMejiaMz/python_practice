@@ -30,12 +30,12 @@ while game_tries <5:
 
     userword = input()
     userword.lower()
-
+    # loops goes over every character in the user input and compares it to the golden word
     while len(userword) != 5:
         print ("please choose a 5 letter word")
         userword = input()
     userword = split(userword)
-
+    #counter is used to get the index of the character being tested from userword to compare to in right spot, starts at -1 so that the first index is 0
     counter = -1
     for char in userword:
         counter = counter +1
