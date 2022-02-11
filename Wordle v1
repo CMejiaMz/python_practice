@@ -1,0 +1,56 @@
+import random
+import csv
+usedchars = []
+
+with open('five_letter_dict.csv') as f:
+    reader = csv.reader(f)
+    word_list = list(reader)
+W  = '\033[0m'  # white (normal)
+R  = '\033[31m' # red
+G  = '\033[32m' # green
+O  = '\033[33m' # orange
+B  = '\033[34m' # blue
+P  = '\033[35m' # purple
+Y  = '\033[33m' # purple
+#function to split words into individual characters
+def split(word):
+    return [char for char in word]
+
+golden_word = word_list[random.randint(0,len(word_list)-1)]
+
+game_tries = 0
+for char in golden_word:
+    golden_word = char
+golden_word = split(golden_word)
+
+
+while game_tries <5:
+
+    print ("Select your first 5 letter word:")
+
+    userword = input()
+    userword.lower()
+
+    while len(userword) != 5:
+        print ("please choose a 5 letter word")
+        userword = input()
+    userword = split(userword)
+
+    counter = -1
+    for char in userword:
+        counter = counter +1
+        if char == golden_word[counter]:
+            print(G+char)
+        elif char in golden_word:
+           print (Y+char)
+        else:
+             print(W+char)
+             if char not in usedchars:
+                usedchars.append(char)
+    print (W+'You have ',4-game_tries, ' attempts left')
+    print (W+ 'Bad letter: ',usedchars)
+    game_tries= game_tries+1
+final_answer = ''
+for char in golden_word:
+    final_answer = final_answer +char
+print ("Correct Word was: ",final_answer)
